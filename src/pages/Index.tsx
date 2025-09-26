@@ -13,6 +13,7 @@ import { LiveAlertsSection } from "@/components/LiveAlertsSection";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
 
 export interface Incident {
   id: string;
@@ -28,6 +29,7 @@ const Index = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [language, setLanguage] = useState("en");
   const { toast } = useToast();
+  const { user, logout } = useAuth();
 
   const [incidents, setIncidents] = useState<Incident[]>([]);
 
@@ -124,8 +126,21 @@ const Index = () => {
                   <SelectItem value="tn">Setswana</SelectItem>
                 </SelectContent>
               </Select>
-              <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-primary-foreground font-bold">
-                RS
+              <div className="flex items-center space-x-3">
+                <span className="text-sm text-muted-foreground">
+                  Welcome, {user?.username}
+                </span>
+                <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-primary-foreground font-bold">
+                  {user?.username?.charAt(0).toUpperCase() || 'U'}
+                </div>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={logout}
+                  className="ml-2"
+                >
+                  Logout
+                </Button>
               </div>
             </div>
           </div>
