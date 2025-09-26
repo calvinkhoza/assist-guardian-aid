@@ -18,9 +18,9 @@ interface IncidentTableProps {
 export const IncidentTable = ({ incidents, updateIncidents, showFilters = false }: IncidentTableProps) => {
   const [filteredIncidents, setFilteredIncidents] = useState(incidents);
   const [filters, setFilters] = useState({
-    province: "",
-    type: "",
-    status: "",
+    province: "all",
+    type: "all",
+    status: "all",
     dateFrom: "",
     dateTo: ""
   });
@@ -32,19 +32,19 @@ export const IncidentTable = ({ incidents, updateIncidents, showFilters = false 
     
     let filtered = incidents;
     
-    if (newFilters.province) {
+    if (newFilters.province && newFilters.province !== "all") {
       filtered = filtered.filter(incident => 
         incident.location.toLowerCase().includes(newFilters.province.toLowerCase())
       );
     }
     
-    if (newFilters.type) {
+    if (newFilters.type && newFilters.type !== "all") {
       filtered = filtered.filter(incident => 
         incident.type.toLowerCase() === newFilters.type.toLowerCase()
       );
     }
     
-    if (newFilters.status) {
+    if (newFilters.status && newFilters.status !== "all") {
       filtered = filtered.filter(incident => 
         incident.status === newFilters.status
       );
@@ -117,7 +117,7 @@ export const IncidentTable = ({ incidents, updateIncidents, showFilters = false 
                 <SelectValue placeholder="All Provinces" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Provinces</SelectItem>
+                <SelectItem value="all">All Provinces</SelectItem>
                 <SelectItem value="gp">Gauteng</SelectItem>
                 <SelectItem value="wc">Western Cape</SelectItem>
                 <SelectItem value="kzn">KwaZulu-Natal</SelectItem>
@@ -138,7 +138,7 @@ export const IncidentTable = ({ incidents, updateIncidents, showFilters = false 
                 <SelectValue placeholder="All Types" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Types</SelectItem>
+                <SelectItem value="all">All Types</SelectItem>
                 <SelectItem value="physical">Physical</SelectItem>
                 <SelectItem value="sexual">Sexual</SelectItem>
                 <SelectItem value="emotional">Emotional</SelectItem>
@@ -155,7 +155,7 @@ export const IncidentTable = ({ incidents, updateIncidents, showFilters = false 
                 <SelectValue placeholder="All Statuses" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Statuses</SelectItem>
+                <SelectItem value="all">All Statuses</SelectItem>
                 <SelectItem value="new">New</SelectItem>
                 <SelectItem value="in-progress">In Progress</SelectItem>
                 <SelectItem value="resolved">Resolved</SelectItem>

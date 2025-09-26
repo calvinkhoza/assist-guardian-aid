@@ -19,8 +19,8 @@ interface Service {
 
 export const ServicesSection = () => {
   const [filters, setFilters] = useState({
-    type: "",
-    location: ""
+    type: "all",
+    location: "all"
   });
 
   const services: Service[] = [
@@ -81,8 +81,8 @@ export const ServicesSection = () => {
   ];
 
   const filteredServices = services.filter(service => {
-    if (filters.type && service.type !== filters.type) return false;
-    if (filters.location && !service.location.toLowerCase().includes(filters.location.toLowerCase())) return false;
+    if (filters.type && filters.type !== "all" && service.type !== filters.type) return false;
+    if (filters.location && filters.location !== "all" && !service.location.toLowerCase().includes(filters.location.toLowerCase())) return false;
     return true;
   });
 
@@ -137,7 +137,7 @@ export const ServicesSection = () => {
                   <SelectValue placeholder="All Types" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Types</SelectItem>
+                  <SelectItem value="all">All Types</SelectItem>
                   <SelectItem value="shelter">Shelter</SelectItem>
                   <SelectItem value="medical">Medical</SelectItem>
                   <SelectItem value="legal">Legal</SelectItem>
@@ -153,7 +153,7 @@ export const ServicesSection = () => {
                   <SelectValue placeholder="All Locations" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Locations</SelectItem>
+                  <SelectItem value="all">All Locations</SelectItem>
                   <SelectItem value="gp">Gauteng</SelectItem>
                   <SelectItem value="wc">Western Cape</SelectItem>
                   <SelectItem value="kzn">KwaZulu-Natal</SelectItem>
